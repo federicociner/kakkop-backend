@@ -18,39 +18,35 @@ from django.contrib import admin
 from django.urls import include, path
 from django.views.generic import TemplateView
 from rest_framework.schemas import get_schema_view
-from rest_framework_simplejwt.views import (
-    TokenObtainPairView,
-    TokenRefreshView,
-)
 
-API_TITLE = "Blog API"
-API_DESCRIPTION = "A web API for creating and editing blog posts."
-schema_view = get_schema_view(
-    title=API_TITLE, description=API_DESCRIPTION, version="1.0.0"
-)
+from users.views import LoginView, RegisterView
 
-admin = [path("admin/", admin.site.urls)]
+API_PATH = "api/v1"
+API_TITLE = "Kakkop API"
+API_DESCRIPTION = "REST API for the Kakkop game scoring application."
+VERSION = "1.0.0"
+
+admin = [path("admin", admin.site.urls)]
 api = [
-    path("api/v1/", include("posts.urls")),
-    path("api/v1/", include("users.urls")),
+    path(f"{API_PATH}/", include("users.urls")),
 ]
 auth = [
     path("api-auth/", include("rest_framework.urls")),
+    path(f"{API_PATH}/auth/login", LoginView.as_view(), name="login"),
     path(
-        "api/v1/token/",
-        TokenObtainPairView.as_view(),
-        name="token_obtain_pair",
-    ),
-    path(
-        "api/v1/token/refresh/",
-        TokenRefreshView.as_view(),
-        name="token_refresh",
+        f"{API_PATH}/auth/register", RegisterView.as_view(), name="register",
     ),
 ]
 docs = [
-    path("schema/", schema_view, name="openapi-schema"),
     path(
-        "swagger-ui/",
+        f"{API_PATH}/schema",
+        get_schema_view(
+            title=API_TITLE, description=API_DESCRIPTION, version=VERSION
+        ),
+        name="openapi-schema",
+    ),
+    path(
+        f"{API_PATH}/swagger-ui",
         TemplateView.as_view(
             template_name="swagger-ui.html",
             extra_context={"schema_url": "openapi-schema"},

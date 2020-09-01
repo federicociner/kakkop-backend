@@ -7,9 +7,10 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
-"""
 
+"""
 from pathlib import Path
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
@@ -36,16 +37,26 @@ DJANGO_CORE_APPS = [
 ]
 
 THIRD_PARTY_APPS = [
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
+    "corsheaders",
+    "dj_rest_auth",
+    "dj_rest_auth.registration",
     "rest_framework",
 ]
 
-LOCAL_APPS = ["posts.apps.PostsConfig", "users.apps.UsersConfig"]
+LOCAL_APPS = [
+    "api.apps.ApiConfig",
+    "users.apps.UsersConfig",
+]
 
 INSTALLED_APPS = DJANGO_CORE_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -84,8 +95,6 @@ DATABASES = {
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
-AUTH_USER_MODEL = "users.CustomUser"
-
 ua = "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"
 min_len = "django.contrib.auth.password_validation.MinimumLengthValidator"
 common = "django.contrib.auth.password_validation.CommonPasswordValidator"
@@ -107,22 +116,48 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
-
 STATIC_URL = "/static/"
-EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
-SITE_ID = 1
 
-# Django REST Framework
+# Custom user model used for authentication
+AUTH_USER_MODEL = "users.CustomUser"
+
+# Configuration for Django REST Framework
 REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": [
-        "rest_framework.permissions.IsAuthenticated"
+        "rest_framework.permissions.AllowAny"  # TODO: Remove
     ],
     "DEFAULT_AUTHENTICATION_CLASSES": [
-        "rest_framework.authentication.SessionAuthentication",
-        "rest_framework_simplejwt.authentication.JWTAuthentication",
+        "dj_rest_auth.jwt_auth.JWTCookieAuthentication",
     ],
+    "EXCEPTION_HANDLER": "kakkop.errors.custom_exception_handler",
 }
 
+# Configuration for django-allauth
+ACCOUNT_AUTHENTICATION_METHOD = "email"
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION = "none"
+ACCOUNT_LOGOUT_ON_GET = False
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+REST_SESSION_LOGIN = False
+REST_USE_JWT = True
+SITE_ID = 1
+
+# Configuration for dj-rest-auth
 REST_AUTH_SERIALIZERS = {
-    "USER_DETAILS_SERIALIZER": "users.serializers.UserSerializer"
+    "LOGIN_SERIALIZER": "users.serializers.CustomLoginSerializer",
+    "USER_DETAILS_SERIALIZER": "users.serializers.UserSerializer",
 }
+
+REST_AUTH_REGISTER_SERIALIZERS = {
+    "REGISTER_SERIALIZER": "users.serializers.CustomRegisterSerializer"
+}
+
+# Configuration for Django REST Simple JWT
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(hours=24),
+    "REFRESH_TOKEN_LIFETIME": timedelta(hours=24),
+}
+
+# Configuration for django-cors-headers
+CORS_ORIGIN_WHITELIST = ("http://localhost:3000",)
