@@ -1,6 +1,6 @@
+from django.contrib.auth.models import update_last_login
 from dj_rest_auth.views import LoginView
 from dj_rest_auth.registration.views import RegisterView
-from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
 from rest_framework.generics import ListAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.response import Response
@@ -17,6 +17,12 @@ class LoginView(LoginView):
 
         return response
 
+    def login(self):
+        user = self.serializer.validated_data["user"]
+        update_last_login(None, user)
+
+        super().login()
+
 
 class RegisterView(RegisterView):
     def create(self, request):
@@ -27,13 +33,11 @@ class RegisterView(RegisterView):
 
 
 class UserList(ListAPIView):
-    # permission_classes = [IsAuthenticated]
     queryset = CustomUser.objects.all()
     serializer_class = UserSerializer
 
 
 class UserDetail(RetrieveUpdateDestroyAPIView):
-    # permission_classes = [IsAuthenticated]
     queryset = CustomUser.objects.all()
     serializer_class = UserSerializer
 

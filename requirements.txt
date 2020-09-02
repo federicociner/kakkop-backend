@@ -8,11 +8,12 @@ click==7.1.2
 coreapi==2.3.3
 coreschema==0.0.4
 defusedxml==0.6.0
+dj-rest-auth==1.1.1
 Django==3.1
 django-allauth==0.42.0
 django-cors-headers==3.4.0
-django-rest-auth==0.9.5
 djangorestframework==3.11.1
+djangorestframework-camel-case==1.2.0
 djangorestframework-simplejwt==4.4.0
 flake8==3.8.3
 idna==2.10
