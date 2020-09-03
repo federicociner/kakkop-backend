@@ -1,12 +1,11 @@
-from django.contrib.auth.models import update_last_login
-from dj_rest_auth.views import LoginView
 from dj_rest_auth.registration.views import RegisterView
-from rest_framework import status
-from rest_framework.generics import ListAPIView, RetrieveUpdateDestroyAPIView
+from dj_rest_auth.views import LoginView
+from django.contrib.auth.models import update_last_login
+from rest_framework import generics, status
 from rest_framework.response import Response
 from rest_framework_simplejwt.settings import api_settings
 
-from users.models import CustomUser
+from users.models import BaseUser
 from users.serializers import UserSerializer
 
 
@@ -32,13 +31,13 @@ class RegisterView(RegisterView):
         return response
 
 
-class UserList(ListAPIView):
-    queryset = CustomUser.objects.all()
+class UserList(generics.ListAPIView):
+    queryset = BaseUser.objects.all()
     serializer_class = UserSerializer
 
 
-class UserDetail(RetrieveUpdateDestroyAPIView):
-    queryset = CustomUser.objects.all()
+class UserDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = BaseUser.objects.all()
     serializer_class = UserSerializer
 
     def destroy(self, request, *args, **kwargs):

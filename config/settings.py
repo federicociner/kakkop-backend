@@ -1,5 +1,5 @@
-from pathlib import Path
 from datetime import timedelta
+from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
@@ -54,7 +54,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = "kakkop.urls"
+ROOT_URLCONF = "config.urls"
 
 TEMPLATES = [
     {
@@ -72,7 +72,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "kakkop.wsgi.application"
+WSGI_APPLICATION = "config.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
@@ -109,7 +109,7 @@ USE_TZ = True
 STATIC_URL = "/static/"
 
 # Custom user model used for authentication
-AUTH_USER_MODEL = "users.CustomUser"
+AUTH_USER_MODEL = "users.BaseUser"
 
 # Configuration for Django REST Framework
 REST_FRAMEWORK = {
@@ -126,7 +126,7 @@ REST_FRAMEWORK = {
         "djangorestframework_camel_case.render.CamelCaseJSONRenderer",
         "djangorestframework_camel_case.render.CamelCaseBrowsableAPIRenderer",
     ),
-    "EXCEPTION_HANDLER": "kakkop.errors.custom_exception_handler",
+    "EXCEPTION_HANDLER": "api.errors.custom_exception_handler",
     "JSON_UNDERSCOREIZE": {"no_underscore_before_number": True},
 }
 

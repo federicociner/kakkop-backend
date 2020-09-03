@@ -1,6 +1,5 @@
 from django.contrib import admin
 
-
 from api.models import Game
 
 
@@ -21,8 +20,8 @@ class GameAdmin(admin.ModelAdmin):
             {
                 "fields": (
                     "creator",
-                    "num_rounds",
-                    "num_players",
+                    "number_of_rounds",
+                    "number_of_players",
                     "status",
                     "game_type",
                 )
@@ -36,8 +35,8 @@ class GameAdmin(admin.ModelAdmin):
                 "classes": ("wide",),
                 "fields": (
                     "creator",
-                    "num_rounds",
-                    "num_players",
+                    "number_of_rounds",
+                    "number_of_players",
                     "status",
                     "game_type",
                 ),

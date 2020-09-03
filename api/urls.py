@@ -1,7 +1,10 @@
-from django.urls import path
+from django.urls import include, path
 
-from api.views import GameList
+from .views import GameApi, GameDetailApi
 
-urlpatterns = [
-    path("games", GameList.as_view()),
+game_patterns = [
+    path("", GameApi.as_view(), name="list"),
+    path("<int:pk>/", GameDetailApi.as_view(), name="detail"),
 ]
+
+urlpatterns = [path("games/", include((game_patterns, "games")))]

@@ -1,11 +1,11 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
-from users.models import CustomUser
+from users.models import BaseUser
 
 
-class CustomUserAdmin(UserAdmin):
-    model = CustomUser
+class BaseUserAdmin(UserAdmin):
+    model = BaseUser
     list_display = (
         "email",
         "first_name",
@@ -46,4 +46,4 @@ class CustomUserAdmin(UserAdmin):
     ordering = ("email",)
 
 
-admin.site.register(CustomUser, CustomUserAdmin)
+admin.site.register(BaseUser, BaseUserAdmin)
