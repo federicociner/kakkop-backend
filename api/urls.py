@@ -1,10 +1,19 @@
 from django.urls import include, path
 
-from .views import GameApi, GameDetailApi
+from .views.game import GameDetailApi, GameListApi
+from .views.player import PlayerDetailApi, PlayerListApi
 
 game_patterns = [
-    path("", GameApi.as_view(), name="list"),
-    path("<int:pk>/", GameDetailApi.as_view(), name="detail"),
+    path("", GameListApi.as_view(), name="game_list"),
+    path("<int:pk>/", GameDetailApi.as_view(), name="game_detail"),
 ]
 
-urlpatterns = [path("games/", include((game_patterns, "games")))]
+player_patterns = [
+    path("", PlayerListApi.as_view(), name="player_list"),
+    path("<int:pk>/", PlayerDetailApi.as_view(), name="player_detail"),
+]
+
+urlpatterns = [
+    path("games/", include((game_patterns, "games"))),
+    path("players/", include((player_patterns, "players"))),
+]

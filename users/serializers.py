@@ -2,7 +2,7 @@ from dj_rest_auth.registration.serializers import RegisterSerializer
 from dj_rest_auth.serializers import LoginSerializer
 from rest_framework import serializers
 
-from users.models import BaseUser
+from .models import BaseUser
 
 
 class CustomLoginSerializer(LoginSerializer):

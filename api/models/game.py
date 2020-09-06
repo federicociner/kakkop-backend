@@ -23,13 +23,3 @@ class Game(BaseModel):
 
     class Meta:
         db_table = "games"
-
-
-class Player(BaseModel):
-    user = models.ForeignKey(BaseUser, on_delete=models.CASCADE)
-    game = models.ForeignKey(Game, on_delete=models.CASCADE)
-    is_first_dealer = models.BooleanField()
-    position = models.IntegerField()
-
-    class Meta:
-        db_table = "players"

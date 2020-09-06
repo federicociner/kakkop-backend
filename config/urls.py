@@ -10,7 +10,7 @@ API_TITLE = "Kakkop API"
 API_DESCRIPTION = "REST API for the Kakkop game scoring application."
 VERSION = "1.0.0"
 
-admin = [path("admin/", admin.site.urls)]
+admin = [path("admin/", admin.site.urls, name="admin")]
 api = [
     path(f"{API_PATH}/", include("api.urls")),
     path(f"{API_PATH}/", include("users.urls")),

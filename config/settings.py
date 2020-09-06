@@ -126,7 +126,7 @@ REST_FRAMEWORK = {
         "djangorestframework_camel_case.render.CamelCaseJSONRenderer",
         "djangorestframework_camel_case.render.CamelCaseBrowsableAPIRenderer",
     ),
-    "EXCEPTION_HANDLER": "api.errors.custom_exception_handler",
+    "EXCEPTION_HANDLER": "common.exceptions.custom_exception_handler",
     "JSON_UNDERSCOREIZE": {"no_underscore_before_number": True},
 }
 

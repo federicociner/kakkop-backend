@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from api.models import Game
+from .models.game import Game
 
 
 class GameAdmin(admin.ModelAdmin):

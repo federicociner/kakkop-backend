@@ -3,7 +3,7 @@ from django.utils.translation import ugettext_lazy as _
 
 
 class BaseUserManager(BaseUserManager):
-    """Custom user model manager, where email is the unique identifier for
+    """Base user model manager, where email is the unique identifier for
     authentication instead of username.
 
     """

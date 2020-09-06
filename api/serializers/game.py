@@ -1,9 +1,9 @@
-from rest_framework import serializers
+from rest_framework.serializers import ModelSerializer
 
-from api.models import Game
+from ..models.game import Game
 
 
-class GameSerializer(serializers.ModelSerializer):
+class GameSerializer(ModelSerializer):
     class Meta:
         model = Game
         fields = (

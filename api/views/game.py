@@ -1,16 +1,20 @@
-from rest_framework import generics, status
+from rest_framework import status
+from rest_framework.generics import (
+    ListCreateAPIView,
+    RetrieveUpdateDestroyAPIView,
+)
 from rest_framework.response import Response
 
-from .models import Game
-from .serializers import GameSerializer
+from ..models.game import Game
+from ..serializers.game import GameSerializer
 
 
-class GameApi(generics.ListCreateAPIView):
+class GameListApi(ListCreateAPIView):
     queryset = Game.objects.all()
     serializer_class = GameSerializer
 
 
-class GameDetailApi(generics.RetrieveUpdateDestroyAPIView):
+class GameDetailApi(RetrieveUpdateDestroyAPIView):
     queryset = Game.objects.all()
     serializer_class = GameSerializer
 
