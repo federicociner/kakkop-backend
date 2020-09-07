@@ -6,8 +6,6 @@ from users.models import BaseUser
 
 class Game(BaseModel):
     creator = models.ForeignKey(BaseUser, on_delete=models.CASCADE)
-    number_of_rounds = models.IntegerField(default=0)
-    number_of_players = models.IntegerField()
     status = models.CharField(
         choices=[
             ("setup", "Setup"),

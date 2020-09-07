@@ -14,32 +14,13 @@ class GameAdmin(admin.ModelAdmin):
         "id",
         "creator",
     )
-    fieldsets = (
-        (
-            None,
-            {
-                "fields": (
-                    "creator",
-                    "number_of_rounds",
-                    "number_of_players",
-                    "status",
-                    "game_type",
-                )
-            },
-        ),
-    )
+    fieldsets = ((None, {"fields": ("creator", "status", "game_type",)},),)
     add_fieldsets = (
         (
             None,
             {
                 "classes": ("wide",),
-                "fields": (
-                    "creator",
-                    "number_of_rounds",
-                    "number_of_players",
-                    "status",
-                    "game_type",
-                ),
+                "fields": ("creator", "status", "game_type"),
             },
         ),
     )

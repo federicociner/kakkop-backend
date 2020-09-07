@@ -33,7 +33,7 @@ class UserTests(APITestCase):
             BaseUser.objects.get(first_name="Second").email, "second@bar.com"
         )
 
-    def test_log_in_user(self):
+    def test_login_user(self):
         url = reverse("login")
         data = {"email": "foo@bar.com", "password": "bojangles"}
         response = self.client.post(url, data, format="json")

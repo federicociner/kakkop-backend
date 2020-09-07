@@ -42,5 +42,5 @@ class CustomRegisterSerializer(RegisterSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = BaseUser
-        fields = ("id", "email", "first_name", "last_name")
-        read_only_fields = ("email",)
+        fields = ["id", "email", "first_name", "last_name"]
+        read_only_fields = ["email"]

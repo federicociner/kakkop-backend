@@ -1,15 +1,12 @@
 from rest_framework import status
-from rest_framework.generics import (
-    ListCreateAPIView,
-    RetrieveUpdateDestroyAPIView,
-)
+from rest_framework.generics import ListAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.response import Response
 
 from ..models.player import Player
 from ..serializers.player import PlayerSerializer
 
 
-class PlayerListApi(ListCreateAPIView):
+class PlayerListApi(ListAPIView):
     queryset = Player.objects.all()
     serializer_class = PlayerSerializer
 
