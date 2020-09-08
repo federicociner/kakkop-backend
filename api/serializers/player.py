@@ -6,10 +6,5 @@ from ..models.player import Player
 class PlayerSerializer(ModelSerializer):
     class Meta:
         model = Player
-        fields = [
-            "id",
-            "user",
-            "game",
-            "position",
-        ]
+        fields = ["id", "user", "game", "position", "is_first_dealer"]
         read_only_fields = ["game"]

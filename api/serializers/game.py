@@ -1,8 +1,8 @@
 from rest_framework.serializers import ModelSerializer
 
+from .. import constants
 from ..models.game import Game
-from ..models.player import Player
-from ..models.round import Round
+from ..services.hannibal import HannibalGameService
 from .player import PlayerSerializer
 from .round import RoundSerializer
 
@@ -18,6 +18,7 @@ class GameSerializer(ModelSerializer):
             "creator",
             "status",
             "game_type",
+            "number_of_rounds",
             "players",
             "rounds",
         ]
@@ -25,13 +26,12 @@ class GameSerializer(ModelSerializer):
     def create(self, validated_data):
         players_data = validated_data.pop("players")
         game = Game.objects.create(**validated_data)
+        service = None
 
-        # Generate players
-        for data in players_data:
-            dealer = Player.objects.create(game=game, **data)
+        if validated_data["game_type"] == constants.HANNIBAL:
+            service = HannibalGameService()
 
-        # Generate rounds
-        for i in range(10):
-            Round.objects.create(game=game, dealer=dealer)
+        service.generate_players(game, players_data)
+        service.generate_rounds(game)
 
         return game

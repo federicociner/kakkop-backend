@@ -6,15 +6,16 @@ from ..models import BaseUser
 
 
 class UserTests(APITestCase):
-    def setUp(self):
+    @classmethod
+    def setUpTestData(cls):
         user_attributes = {
             "email": "foo@bar.com",
             "first_name": "Foo",
             "last_name": "Bar",
         }
-        self.user = BaseUser.objects.create(**user_attributes)
-        self.user.set_password("bojangles")
-        self.user.save()
+        cls.user = BaseUser.objects.create(**user_attributes)
+        cls.user.set_password("bojangles")
+        cls.user.save()
 
     def test_create_user(self):
         url = reverse("register")

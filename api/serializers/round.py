@@ -6,5 +6,12 @@ from ..models.round import Round
 class RoundSerializer(ModelSerializer):
     class Meta:
         model = Round
-        fields = ["id", "game", "dealer", "status", "number_of_cards"]
+        fields = [
+            "id",
+            "game",
+            "dealer",
+            "number",
+            "status",
+            "number_of_cards",
+        ]
         read_only_fields = ["game", "dealer"]

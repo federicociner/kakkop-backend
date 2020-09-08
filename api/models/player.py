@@ -12,6 +12,7 @@ class Player(BaseModel):
         Game, on_delete=models.CASCADE, related_name="players"
     )
     position = models.IntegerField()
+    is_first_dealer = models.BooleanField()
 
     class Meta:
         db_table = "players"

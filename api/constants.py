@@ -1,0 +1,2 @@
+HANNIBAL = "hannibal"
+UNO = "uno"

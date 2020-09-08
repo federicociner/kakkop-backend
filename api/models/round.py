@@ -11,6 +11,7 @@ class Round(BaseModel):
         Game, on_delete=models.CASCADE, related_name="rounds"
     )
     dealer = models.ForeignKey(Player, on_delete=models.CASCADE)
+    number = models.IntegerField()
     status = models.CharField(
         choices=[
             ("notStarted", "Not started"),
