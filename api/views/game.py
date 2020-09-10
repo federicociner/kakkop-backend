@@ -1,4 +1,5 @@
 from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.generics import (
     ListCreateAPIView,
     RetrieveUpdateDestroyAPIView,
@@ -10,6 +11,7 @@ from ..serializers.game import GameSerializer
 
 
 class GameListApi(ListCreateAPIView):
+    # permission_classes = [IsAuthenticated]
     queryset = Game.objects.all()
     serializer_class = GameSerializer
 

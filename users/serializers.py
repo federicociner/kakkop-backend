@@ -18,6 +18,9 @@ class CustomLoginSerializer(LoginSerializer):
             "password": self.validated_data.get("password", ""),
         }
 
+    def validate_email(self, value):
+        return value.lower()
+
 
 class CustomRegisterSerializer(RegisterSerializer):
     email = serializers.EmailField(required=True)
@@ -37,6 +40,9 @@ class CustomRegisterSerializer(RegisterSerializer):
             "password1": self.validated_data.get("password1", ""),
             "password2": self.validated_data.get("password2", ""),
         }
+
+    def validate_email(self, value):
+        return value.lower()
 
 
 class UserSerializer(serializers.ModelSerializer):
