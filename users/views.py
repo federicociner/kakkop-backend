@@ -1,3 +1,4 @@
+import logging
 from dj_rest_auth.registration.views import RegisterView
 from dj_rest_auth.views import LoginView
 from django.contrib.auth.models import update_last_login
@@ -7,6 +8,8 @@ from rest_framework_simplejwt.settings import api_settings
 
 from users.models import BaseUser
 from users.serializers import UserSerializer
+
+LOGGER = logging.getLogger(__file__)
 
 
 class LoginView(LoginView):
@@ -44,9 +47,7 @@ class UserDetail(generics.RetrieveUpdateDestroyAPIView):
         serializer = self.get_serializer(self.get_object())
         first_name = serializer.data["first_name"]
         last_name = serializer.data["last_name"]
-        content = {
-            "message": f"User '{first_name} {last_name}' successfully deleted."
-        }
+        content = {"message": f"User '{first_name} {last_name}' successfully deleted."}
         super().destroy(request, *args, **kwargs)
 
         return Response(content, status=status.HTTP_200_OK)

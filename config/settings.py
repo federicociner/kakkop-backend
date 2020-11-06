@@ -1,3 +1,4 @@
+import os
 from datetime import timedelta
 from pathlib import Path
 
@@ -32,12 +33,15 @@ THIRD_PARTY_APPS = [
     "corsheaders",
     "dj_rest_auth",
     "dj_rest_auth.registration",
+    "django_extensions",
     "djangorestframework_camel_case",
+    "graphene_django",
     "rest_framework",
 ]
 
 LOCAL_APPS = [
     "api.apps.ApiConfig",
+    "kakkop.apps.KakkopConfig",
     "users.apps.UsersConfig",
 ]
 
@@ -74,14 +78,50 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "config.wsgi.application"
 
+# Logging
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "verbose": {"format": "%(levelname)s %(asctime)s %(module)s %(message)s"},
+        "simple": {"format": "%(levelname)s %(message)s"},
+    },
+    "handlers": {"console": {"class": "logging.StreamHandler", "formatter": "verbose"}},
+    "loggers": {
+        "": {
+            "handlers": ["console"],
+            "level": os.environ.get("DJANGO_LOG_LEVEL", "INFO"),
+        },
+        "django": {
+            "handlers": ["console"],
+            "level": os.environ.get("DJANGO_LOG_LEVEL", "INFO"),
+            "propagate": False,
+        },
+    },
+}
+
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+pg_hostname = os.environ.get("POSTGRES_HOST", None)
+
+if pg_hostname:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql_psycopg2",
+            "NAME": os.environ.get("POSTGRES_DB_NAME"),
+            "USER": os.environ.get("POSTGRES_DB_USER"),
+            "PASSWORD": os.environ.get("POSTGRES_DB_PASSWORD"),
+            "HOST": pg_hostname,
+            "PORT": os.environ.get("POSTGRES_DB_PORT"),
+        }
     }
-}
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
+        }
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -159,3 +199,6 @@ SIMPLE_JWT = {
 
 # Configuration for django-cors-headers
 CORS_ORIGIN_WHITELIST = ("http://localhost:3000",)
+
+# Graphene
+GRAPHENE = {"SCHEMA": "kakkop.schema.schema"}

@@ -15,6 +15,3 @@ class Game(BaseModel):
         choices=[("hannibal", "Hannibal"), ("uno", "Uno")], max_length=32
     )
     number_of_rounds = models.IntegerField(default=0)
-
-    class Meta:
-        db_table = "games"
