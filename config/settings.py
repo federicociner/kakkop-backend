@@ -40,7 +40,6 @@ THIRD_PARTY_APPS = [
 ]
 
 LOCAL_APPS = [
-    "api.apps.ApiConfig",
     "kakkop.apps.KakkopConfig",
     "users.apps.UsersConfig",
 ]

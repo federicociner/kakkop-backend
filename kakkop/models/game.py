@@ -1,14 +1,14 @@
 from django.db import models
 
-from common.models import BaseModel
-from users.models import BaseUser
+from common.mixins import CreateModifyDateMixin
+from users.models import BaseUser as User
 
 
-class Game(BaseModel):
-    creator = models.ForeignKey(BaseUser, on_delete=models.CASCADE)
+class Game(CreateModifyDateMixin):
+    creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name="games")
     status = models.CharField(
-        choices=[("inProgress", "In progress"), ("completed", "Completed")],
-        default="inProgress",
+        choices=[("in_progress", "In progress"), ("completed", "Completed")],
+        default="in_progress",
         max_length=16,
     )
     game_type = models.CharField(

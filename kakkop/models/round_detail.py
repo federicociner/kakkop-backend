@@ -1,12 +1,12 @@
 from django.db import models
 
-from common.models import BaseModel
+from common.mixins import CreateModifyDateMixin
 
-from .player import Player
-from .round import Round
+from kakkop.models.player import Player
+from kakkop.models.round import Round
 
 
-class RoundDetail(BaseModel):
+class RoundDetail(CreateModifyDateMixin):
     round = models.ForeignKey(
         Round, on_delete=models.CASCADE, related_name="round_details"
     )

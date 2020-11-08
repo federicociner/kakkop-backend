@@ -3,10 +3,10 @@ from typing import Dict, List
 
 from django.core.exceptions import ValidationError
 
-from ..models.game import Game
-from ..models.player import Player
-from ..models.round import Round
-from .utilities import find_index
+from kakkop.models.game import Game
+from kakkop.models.player import Player
+from kakkop.models.round import Round
+from kakkop.services.utilities import find_index
 
 
 class HannibalGameService:
